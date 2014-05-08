@@ -1,0 +1,19 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.5.1",
+    "jade": "*",
+    "knex": "^0.5.13",
+    "bookshelf": "^0.6.10",
+    "bcrypt": "^0.7.7",
+    "everyauth": "^0.4.5",
+    "bluebird": "^1.2.4",
+    "redis": "^0.10.1",
+    "connect-redis": "1.4.7"
+  }
+}

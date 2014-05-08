@@ -1,0 +1,107 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.clear {
+  clear: both;
+}
+
+.custom-back {
+  color: #FFF;
+  text-decoration: none;
+}
+
+#conversations li {
+  height: 60px;
+}
+
+#conversations li b {
+  font-size: 18px;
+  line-height: 26px;
+  color: #222;
+}
+
+#conversations li em {
+  font-size: 14px;
+  color: #888;
+}
+
+.sendbar {
+  display:-webkit-box; /* Safari and Chrome */
+  display:box;
+  position: absolute;
+  bottom: 0;
+  left:0;
+  height: 50px;
+  background: #f4f4f4;
+  border-top: 1px solid #CCC;
+  width: 100%;
+}
+
+.sendbar input {
+  height: 30px;
+  margin: 10px;
+  box-flex:1.0;
+  display: block;
+  -webkit-box-flex:1.0;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0 5px;
+  line-height: 30px;
+}
+
+.sendbar button {
+  height: 32px;
+  margin: 10px 10px 10px 0;
+  background: transparent;
+  border: 0;
+  width: 40px;
+  box-flex:0.1;
+  -webkit-box-flex:0.1;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 32px;
+  display: block;
+}
+
+.match-bar {
+  position: absolute;
+  left: 0;
+  bottom: 50px;
+  height: 38px;
+  line-height: 40px;
+  vertical-align: middle;
+  width: 100%;
+  background: #e8e8e8;
+  border-top: 1px solid #ccc;
+}
+
+.match-bar img {
+  margin: 6px 10px 0;
+  display: inline-block;
+}
+
+.messages-wrapper {
+  overflow-x: hidden;
+  overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.message-wrapper {
+  padding: 5px 10px;
+}
+
+.message {
+  width: 80%;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+}
+
+.message-wrapper.me .message {
+  float: right;
+  background: #D7F4FF;
+  border: 1px solid #AEE6FC;
+}
