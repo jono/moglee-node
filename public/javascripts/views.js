@@ -1,3 +1,7 @@
+// Some Globals
+
+var glyphPrefix = 'https://s3.amazonaws.com/moglee/glyphs/';
+
 // Page View 
 
 var Page = Backbone.View.extend({
@@ -176,7 +180,6 @@ var ConversationPage = Page.extend({
   },
 
   showMatchBar : function( matches ) {
-    var glyphPrefix = '/images/glyphs/';
     var $mb = this.$('.match-bar');
 
     $mb
@@ -216,13 +219,12 @@ var ConversationPage = Page.extend({
 });
 
 var MessageView = Backbone.View.extend({
-  
+
   className : 'message-wrapper',
 
   template : _.template( $('#message-templ').html() ),
 
   initialize : function() {
-    var glyphPrefix = '/images/glyphs/';
     var body = this.model.get('body');
     body = body.replace( /\(icon:\w*\)/g, function( match ) {
       var m = match.replace(/\(|\)/g, '').split(':')[1];
