@@ -15,7 +15,8 @@ var Page = Backbone.View.extend({
 var LoginPage = Page.extend({
 
   events : {
-    'click #signin' : 'doLogin'
+    'click #signin' : 'doLogin',
+    'touchmove' : 'preventScroll'
   },
 
   initialize : function() {
@@ -31,6 +32,10 @@ var LoginPage = Page.extend({
       //   app.views.conversations.load();
       // });
     });
+  },
+
+  preventScroll : function ( evt ) {
+    evt.preventDefault();
   }
 
 });
@@ -44,7 +49,8 @@ var ConversationsPage = Page.extend({
   template : _.template( $('#conversations-templ').html() ),
 
   events : {
-    'click .conversation' : 'goToConversation'
+    'click .conversation' : 'goToConversation',
+    'touchstart .toolbar' : 'preventDefault'
   },
 
   initialize : function() {
@@ -71,13 +77,21 @@ var ConversationsPage = Page.extend({
 
   goToConversation : function( e ) {
     var convId = $(e.target).data('id') || $(e.target).parent('.conversation').data('id');
+
+    var model = app.conversations.get(convId);
+    var convPage = new ConversationPage({
+      model : model
+    }).render();
+
+    $('#conversation').html( convPage.$el );
+
     app.go('#conversation', function() {
-      var model = app.conversations.get(convId);
-      new ConversationPage({
-        model : model,
-        el : $('#conversation') 
-      }).render();
+
     });
+  },
+
+  preventDefault : function( e ) {
+    e.preventDefault();
   }
 
 });
@@ -92,9 +106,11 @@ var ConversationPage = Page.extend({
     'click .send' : 'sendMessage',
     'keyup .send-message-field' : 'searchForGlyphMatch',
     'click .glyph-match' : 'selectGlyph'
+    // 'touchstart' : 'preventScroll',
   },
 
   initialize : function() {
+
     this.model.messages.on('add', function( message ) {
       this.addMessageToView( message );
     }, this);
@@ -119,6 +135,15 @@ var ConversationPage = Page.extend({
       this.addMessageToView( message );
     },this) );
     return this;
+  },
+
+  preventScroll : function( e ) {
+    console.log(e.target);
+    if ( !$(e.target).hasClass('messages-wrapper') ) {
+
+      e.preventDefault();
+    }
+
   },
 
   addMessageToView : function( message ) {
@@ -151,7 +176,7 @@ var ConversationPage = Page.extend({
 
   searchForGlyphMatch : function() {
     var word;
-    var messageText = this.$('.send-message-field').val();
+    var messageText = this.$('.send-message-field').val().toLowerCase();
 
     if ( messageText.search(' ') === -1 ) {
       word = messageText;
@@ -201,7 +226,6 @@ var ConversationPage = Page.extend({
     var text;
     var messageText = this.$('.send-message-field').val();
     var key = $(e.target).data('key');
-    console.log(key);
     var glyph = '(icon:'+key+')';
 
 
@@ -228,7 +252,7 @@ var MessageView = Backbone.View.extend({
     var body = this.model.get('body');
     body = body.replace( /\(icon:\w*\)/g, function( match ) {
       var m = match.replace(/\(|\)/g, '').split(':')[1];
-      return '<img src="'+ glyphPrefix + GLYPHS[m] +'" />';
+      return '<div class="icon" style="-webkit-mask-image: url('+ glyphPrefix + GLYPHS[m] +');"></div>';
     });
     this.model.set('body', body);
   },

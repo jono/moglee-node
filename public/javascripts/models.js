@@ -12,9 +12,21 @@ var Conversation = Backbone.Model.extend({
   },
 
   getLastMessageText : function() {
-    console.log( this.messages);
+    var last = this.messages.last();
+    if ( last ) {
+      var body = last.get('body');
+      body = body.replace( /\(icon:\w*\)/g, function( match ) {
+        var m = match.replace(/\(|\)/g, '').split(':')[1];
+        return '<div class="icon" style="-webkit-mask-image: url('+ glyphPrefix + GLYPHS[m] +');"></div>';
+      });
+      return body;
+    }
+    return '';
+  },
+
+  getLastMessageTimestamp : function() {
     if ( this.messages.last() ) {
-      return this.messages.last().get('body');
+      return moment( this.messages.last().get('created_at') ).startOf('minute').fromNow();
     }
     return '';
   }
